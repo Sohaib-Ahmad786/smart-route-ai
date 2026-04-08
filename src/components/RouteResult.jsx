@@ -3,24 +3,43 @@
 import { motion } from "framer-motion";
 
 export default function RouteResult({ result }) {
+  // 👉 Agar result nahi hai to kuch render nahi karega
   if (!result) return null;
 
   return (
     <motion.div
+      // 🎬 Smooth entry animation
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="mt-6 glass p-6 text-center"
+      className="w-full max-w-5xl mx-auto px-4 mt-6"
     >
-      <h3 className="text-lg font-semibold mb-3">Route Details</h3>
+      {/* 🔥 Main Result Card */}
+      <div className="bg-white/5 border border-white/10 backdrop-blur-lg rounded-2xl p-5 md:p-6 shadow-lg">
+        {/* 🔥 Heading */}
+        <h3 className="text-xl font-semibold text-white mb-4">Route Summary</h3>
 
-      <p className="mb-1">
-        📍 <strong>{result.route}</strong>
-      </p>
+        {/* 📊 Result Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-white">
+          {/* 📍 Route */}
+          <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+            <p className="text-gray-400 text-sm mb-1">Route</p>
+            <p className="font-medium">{result.route}</p>
+          </div>
 
-      <p className="mb-1">⏱ Time: {result.time}</p>
+          {/* ⏱ Time */}
+          <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+            <p className="text-gray-400 text-sm mb-1">Estimated Time</p>
+            <p className="font-medium">{result.time}</p>
+          </div>
 
-      <p>📏 Distance: {result.distance}</p>
+          {/* 📏 Distance */}
+          <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+            <p className="text-gray-400 text-sm mb-1">Distance</p>
+            <p className="font-medium">{result.distance}</p>
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 }

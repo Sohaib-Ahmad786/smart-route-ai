@@ -2,73 +2,73 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+
+// 🔗 Components
 import RouteForm from "@/components/RouteForm";
 import RouteResult from "@/components/RouteResult";
 import RouteMap from "@/components/RouteMap";
+
+// 🧠 Logic
 import { getRouteData } from "@/utils/routeLogic";
 
 export default function RoutePage() {
+  // 🔥 State management
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // 🚀 Handle route calculation
   const handleSubmit = () => {
-    if (!start || !end) return; // ✅ validation
+    // ❗ Prevent empty input
+    if (!start || !end) return;
 
     setLoading(true);
 
+    // ⏳ Simulate API delay
     setTimeout(() => {
       const data = getRouteData(start, end);
       setResult(data);
       setLoading(false);
-    }, 1500);
+    }, 1200);
   };
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      // 🎬 Page entry animation
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen flex flex-col items-center justify-center px-4"
+      className="min-h-screen flex flex-col items-center justify-start px-4 py-10"
     >
-      {/* 🔥 Heading Animation */}
-      <motion.h1
-        initial={{ scale: 0.8 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="text-4xl font-bold mb-8 text-center"
-      >
-        Smart Route AI 🚀
-      </motion.h1>
-
-      {/* FORM */}
+      {/* 🔥 Route Form Section */}
       <RouteForm
         start={start}
         end={end}
         setStart={setStart}
         setEnd={setEnd}
         onSubmit={handleSubmit}
-        loading={loading} // ✅ IMPORTANT FIX
+        loading={loading}
       />
 
-      {/* LOADING */}
+      {/* ⏳ Loading State */}
       {loading && (
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="mt-4 animate-pulse text-blue-300"
+          className="mt-6 text-cyan-400 animate-pulse"
         >
-          🚀 Calculating smart route...
+          🚀 Optimizing route...
         </motion.p>
       )}
 
-      {/* RESULT + MAP */}
+      {/* 📊 Result + Map Section */}
       {result && !loading && (
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
+          className="w-full"
         >
           <RouteResult result={result} />
           <RouteMap show={result} />
