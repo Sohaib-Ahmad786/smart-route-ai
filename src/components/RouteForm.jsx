@@ -10,6 +10,12 @@ export default function RouteForm({
   onSubmit,
   loading,
 }) {
+  // 🔥 Handle form submit (Enter key + button)
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    onSubmit();
+  };
+
   return (
     <div className="w-full max-w-5xl mx-auto px-4">
       {/* 🔥 Heading Section */}
@@ -25,7 +31,10 @@ export default function RouteForm({
       </div>
 
       {/* 🔥 Main Container */}
-      <div className="bg-white/5 border border-white/10 backdrop-blur-lg rounded-2xl p-5 md:p-8 shadow-lg">
+      <form
+        onSubmit={handleFormSubmit}
+        className="bg-white/5 border border-white/10 backdrop-blur-lg rounded-2xl p-5 md:p-8 shadow-lg"
+      >
         {/* 🔥 Inputs Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {/* Start Location */}
@@ -39,6 +48,7 @@ export default function RouteForm({
               placeholder="Enter starting point"
               value={start}
               onChange={(e) => setStart(e.target.value)}
+              required
               className="w-full p-3 rounded-xl bg-[#1e293b] border border-white/10 placeholder-gray-400 text-white outline-none focus:ring-2 focus:ring-cyan-400 transition"
             />
           </div>
@@ -54,6 +64,7 @@ export default function RouteForm({
               placeholder="Enter destination"
               value={end}
               onChange={(e) => setEnd(e.target.value)}
+              required
               className="w-full p-3 rounded-xl bg-[#1e293b] border border-white/10 placeholder-gray-400 text-white outline-none focus:ring-2 focus:ring-cyan-400 transition"
             />
           </div>
@@ -61,9 +72,9 @@ export default function RouteForm({
 
         {/* 🚀 Optimize Route Button */}
         <motion.button
-          onClick={onSubmit}
+          type="submit"
           disabled={loading}
-          whileHover={{ scale: loading ? 1 : 1.02 }}
+          whileHover={{ scale: loading ? 1 : 1.03 }}
           whileTap={{ scale: 0.97 }}
           className={`w-full py-4 rounded-xl font-semibold text-black transition-all duration-300 ${
             loading
@@ -85,7 +96,7 @@ export default function RouteForm({
             "🔗 Optimize Route"
           )}
         </motion.button>
-      </div>
+      </form>
     </div>
   );
 }

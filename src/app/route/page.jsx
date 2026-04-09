@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 // 🔗 Components
 import RouteForm from "@/components/RouteForm";
 import RouteResult from "@/components/RouteResult";
-import RouteMap from "@/components/RouteMap";
+import RouteChart from "@/components/RouteChart";
 
 // 🧠 Logic
 import { getRouteData } from "@/utils/routeLogic";
@@ -20,12 +20,13 @@ export default function RoutePage() {
 
   // 🚀 Handle route calculation
   const handleSubmit = () => {
-    // ❗ Prevent empty input
-    if (!start || !end) return;
+    if (!start || !end) {
+      alert("Please enter both start and destination");
+      return;
+    }
 
     setLoading(true);
 
-    // ⏳ Simulate API delay
     setTimeout(() => {
       const data = getRouteData(start, end);
       setResult(data);
@@ -35,13 +36,12 @@ export default function RoutePage() {
 
   return (
     <motion.div
-      // 🎬 Page entry animation
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen flex flex-col items-center justify-start px-4 py-10"
+      className="min-h-screen flex flex-col items-center px-4 py-10"
     >
-      {/* 🔥 Route Form Section */}
+      {/* 🔥 Route Form */}
       <RouteForm
         start={start}
         end={end}
@@ -51,7 +51,7 @@ export default function RoutePage() {
         loading={loading}
       />
 
-      {/* ⏳ Loading State */}
+      {/* ⏳ Loading */}
       {loading && (
         <motion.p
           initial={{ opacity: 0 }}
@@ -62,7 +62,7 @@ export default function RoutePage() {
         </motion.p>
       )}
 
-      {/* 📊 Result + Map Section */}
+      {/* 📊 Result + Chart */}
       {result && !loading && (
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -71,7 +71,7 @@ export default function RoutePage() {
           className="w-full"
         >
           <RouteResult result={result} />
-          <RouteMap show={result} />
+          <RouteChart result={result} />
         </motion.div>
       )}
     </motion.div>
