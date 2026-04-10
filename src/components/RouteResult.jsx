@@ -5,6 +5,35 @@ import { motion } from "framer-motion";
 export default function RouteResult({ result }) {
   if (!result) return null;
 
+  const data = [
+    {
+      label: "Route",
+      value: result.route,
+    },
+    {
+      label: "Estimated Time",
+      value: result.time,
+    },
+    {
+      label: "Distance",
+      value: result.distance,
+    },
+    {
+      label: "Traffic Level",
+      value: `${result.traffic ?? 0}% congestion`,
+      extraClass: "text-yellow-400",
+    },
+    {
+      label: "Weather",
+      value: result.weather,
+    },
+    {
+      label: "Safety Score",
+      value: `${result.safety ?? 0}% safe`,
+      extraClass: "text-green-400",
+    },
+  ];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -19,43 +48,17 @@ export default function RouteResult({ result }) {
 
         {/* 📊 Result Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-white">
-          {/* 📍 Route */}
-          <div className="sohaib-card bg-white/5 p-4 rounded-xl border border-white/10">
-            <p className="text-gray-400 text-sm mb-1">Route</p>
-            <p className="font-medium">{result.route}</p>
-          </div>
-
-          {/* ⏱ Time */}
-          <div className="sohaib-card bg-white/5 p-4 rounded-xl border border-white/10">
-            <p className="text-gray-400 text-sm mb-1">Estimated Time</p>
-            <p className="font-medium">{result.time}</p>
-          </div>
-
-          {/* 📏 Distance */}
-          <div className="sohaib-card bg-white/5 p-4 rounded-xl border border-white/10">
-            <p className="text-gray-400 text-sm mb-1">Distance</p>
-            <p className="font-medium">{result.distance}</p>
-          </div>
-
-          {/* 🚦 Traffic */}
-          <div className="sohaib-card bg-white/5 p-4 rounded-xl border border-white/10">
-            <p className="text-gray-400 text-sm mb-1">Traffic Level</p>
-            <p className="font-medium text-yellow-400">
-              {result.traffic}% congestion
-            </p>
-          </div>
-
-          {/* 🌦️ Weather */}
-          <div className="sohaib-card bg-white/5 p-4 rounded-xl border border-white/10">
-            <p className="text-gray-400 text-sm mb-1">Weather</p>
-            <p className="font-medium">{result.weather}</p>
-          </div>
-
-          {/* 🛡️ Safety */}
-          <div className="sohaib-card bg-white/5 p-4 rounded-xl border border-white/10">
-            <p className="text-gray-400 text-sm mb-1">Safety Score</p>
-            <p className="font-medium text-green-400">{result.safety}% safe</p>
-          </div>
+          {data.map((item, index) => (
+            <div
+              key={index}
+              className="sohaib-card bg-white/5 p-4 rounded-xl border border-white/10"
+            >
+              <p className="text-gray-400 text-sm mb-1">{item.label}</p>
+              <p className={`font-medium ${item.extraClass || ""}`}>
+                {item.value}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </motion.div>

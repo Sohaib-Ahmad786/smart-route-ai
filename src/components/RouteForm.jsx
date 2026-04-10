@@ -10,7 +10,7 @@ export default function RouteForm({
   onSubmit,
   loading,
 }) {
-  // 🔥 Handle form submit (Enter key + button)
+  // 🔥 Handle form submit
   const handleFormSubmit = (e) => {
     e.preventDefault();
     onSubmit();
@@ -33,21 +33,23 @@ export default function RouteForm({
       {/* 🔥 Main Container */}
       <form
         onSubmit={handleFormSubmit}
-        className="bg-white/5 border border-white/10 backdrop-blur-lg rounded-2xl p-5 md:p-8 shadow-lg"
+        className="sohaib-form bg-white/5 border border-white/10 backdrop-blur-lg rounded-2xl p-5 md:p-8 shadow-[0_0_20px_rgba(0,255,150,0.08)]"
       >
         {/* 🔥 Inputs Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {/* Start Location */}
           <div>
-            <label className="text-sm text-gray-300 mb-1 block">
+            <label htmlFor="start" className="text-sm text-gray-300 mb-1 block">
               Start Location
             </label>
 
             <input
+              id="start"
               type="text"
               placeholder="Enter starting point"
               value={start}
-              onChange={(e) => setStart(e.target.value)}
+              autoComplete="off"
+              onChange={(e) => setStart(e.target.value.trimStart())}
               required
               className="w-full p-3 rounded-xl bg-[#1e293b] border border-white/10 placeholder-gray-400 text-white outline-none focus:ring-2 focus:ring-cyan-400 transition"
             />
@@ -55,15 +57,17 @@ export default function RouteForm({
 
           {/* Destination */}
           <div>
-            <label className="text-sm text-gray-300 mb-1 block">
+            <label htmlFor="end" className="text-sm text-gray-300 mb-1 block">
               Destination
             </label>
 
             <input
+              id="end"
               type="text"
               placeholder="Enter destination"
               value={end}
-              onChange={(e) => setEnd(e.target.value)}
+              autoComplete="off"
+              onChange={(e) => setEnd(e.target.value.trimStart())}
               required
               className="w-full p-3 rounded-xl bg-[#1e293b] border border-white/10 placeholder-gray-400 text-white outline-none focus:ring-2 focus:ring-cyan-400 transition"
             />

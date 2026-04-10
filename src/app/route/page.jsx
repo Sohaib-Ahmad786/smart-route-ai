@@ -12,7 +12,6 @@ import RouteChart from "@/components/RouteChart";
 import { getRouteData } from "@/utils/routeLogic";
 
 export default function RoutePage() {
-  // 🔥 State management
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [result, setResult] = useState(null);
@@ -20,18 +19,23 @@ export default function RoutePage() {
 
   // 🚀 Handle route calculation
   const handleSubmit = () => {
-    if (!start || !end) {
-      alert("Please enter both start and destination");
+    const trimmedStart = start.trim();
+    const trimmedEnd = end.trim();
+
+    if (!trimmedStart || !trimmedEnd) {
+      console.warn("Both fields are required");
       return;
     }
 
     setLoading(true);
 
-    setTimeout(() => {
-      const data = getRouteData(start, end);
+    const timer = setTimeout(() => {
+      const data = getRouteData(trimmedStart, trimmedEnd);
       setResult(data);
       setLoading(false);
     }, 1200);
+
+    return () => clearTimeout(timer);
   };
 
   return (
